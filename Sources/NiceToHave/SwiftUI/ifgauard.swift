@@ -1,6 +1,6 @@
 import SwiftUI
 
-extension View {
+public extension View {
     /**
      Runs the given transform function if the given model is not nil.
      - parameter model: The model to evaluate
