@@ -7,7 +7,7 @@ import UIKit
 public protocol UIApplicationProvider {
     func canOpenURL(_ url: URL) -> Bool
     func open(_ url: URL, options: [UIApplication.OpenExternalURLOptionsKey: Any], completionHandler: ((Bool) -> Void)?)
-    @MainActor func open(_ url: URL, options: [UIApplication.OpenExternalURLOptionsKey: Any]) async -> Bool
+    @discardableResult @MainActor func open(_ url: URL, options: [UIApplication.OpenExternalURLOptionsKey: Any]) async -> Bool
     @MainActor var isIdleTimerDisabled: Bool { get set }
 }
 
