@@ -16,7 +16,7 @@ public extension UIApplicationProvider {
         open(url, options: options, completionHandler: completionHandler)
     }
 
-    @MainActor func open(_ url: URL, options: [UIApplication.OpenExternalURLOptionsKey: Any] = [:]) async -> Bool {
+    @discardableResult @MainActor func open(_ url: URL, options: [UIApplication.OpenExternalURLOptionsKey: Any] = [:]) async -> Bool {
         return await open(url, options: options)
     }
 }
