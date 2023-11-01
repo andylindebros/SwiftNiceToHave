@@ -80,6 +80,16 @@ public extension Color {
         self.init(red: red, green: green, blue: blue, opacity: 1)
     }
 
+    init(hex: UInt, alpha: Double = 1) {
+        self.init(
+            .sRGB,
+            red: Double((hex >> 16) & 0xFF) / 255,
+            green: Double((hex >> 08) & 0xFF) / 255,
+            blue: Double((hex >> 00) & 0xFF) / 255,
+            opacity: alpha
+        )
+    }
+
     private static func intFromHexString(_ hexStr: String) -> UInt64 {
         var hexInt: UInt64 = 0
         let scanner = Scanner(string: hexStr)
