@@ -22,18 +22,22 @@ import Foundation
     }
 
     // Since UIApplication.shared can return nil even though the singleton is granted, a wrapper is provided that can be used to inject as a dependency.
-    struct UIApplicationWrapper: UIApplicationProvider {
-        func canOpenURL(_ url: URL) -> Bool {
+    public struct UIApplicationWrapper: UIApplicationProvider {
+        public init() {
+            isIdleTimerDisabled = false
+        }
+
+        public func canOpenURL(_ url: URL) -> Bool {
             UIApplication.shared.canOpenURL(url)
         }
 
-        var isIdleTimerDisabled: Bool {
+        public var isIdleTimerDisabled: Bool {
             didSet {
                 UIApplication.shared.isIdleTimerDisabled = isIdleTimerDisabled
             }
         }
 
-        func open(_ url: URL, options _: [UIApplication.OpenExternalURLOptionsKey: Any]) async -> Bool {
+        public func open(_ url: URL, options _: [UIApplication.OpenExternalURLOptionsKey: Any]) async -> Bool {
             await UIApplication.shared.open(url)
         }
     }
