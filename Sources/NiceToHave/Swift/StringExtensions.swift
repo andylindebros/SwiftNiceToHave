@@ -38,15 +38,19 @@ public extension String {
     var asURL: URL? {
         URL(string: self)
     }
-}
 
-public extension String {
+    var asInt: Int? {
+        Int(self)
+    }
+
+    var asDouble: Double? {
+        Double(self)
+    }
+
     var asSet: Set<String> {
         [self]
     }
-}
 
-public extension String {
     var asBool: Bool {
         if self == "true" {
             return true
