@@ -6,7 +6,7 @@ public protocol TaskManagerProvider {
 }
 
 public class TaskManager: TaskManagerProvider {
-    init() {}
+    public init() {}
     private var tasks = [String: Task<Void, Never>]()
 
     public func singleTask(_ task: Task<Void, Never>, withID id: String) {
