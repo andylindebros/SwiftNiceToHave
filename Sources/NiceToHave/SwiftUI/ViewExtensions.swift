@@ -1,6 +1,8 @@
 import Foundation
 import SwiftUI
-
+#if os(iOS)
+import UIKit
+#endif
 
 public extension View {
     func frame(_ value: CGFloat) -> some View {
@@ -42,7 +44,7 @@ public extension View {
         }
     }
 }
-
+#if canImport(UIKit)
 public extension View {
     var insets: UIEdgeInsets {
         UIApplication
@@ -53,3 +55,4 @@ public extension View {
             .safeAreaInsets ?? .zero
     }
 }
+#endif

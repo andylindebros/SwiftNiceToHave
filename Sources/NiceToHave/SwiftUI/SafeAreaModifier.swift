@@ -1,6 +1,10 @@
 import Foundation
 import SwiftUI
 
+#if os(iOS)
+import UIKit
+#endif
+
 #if canImport(UIKit)
     public extension View {
         @MainActor func paddingSafeArea(_ insets: Edge.Set = .all) -> some View {

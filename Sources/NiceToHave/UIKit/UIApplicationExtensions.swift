@@ -1,7 +1,10 @@
 import Foundation
 import SwiftUI
+#if os(iOS)
 import UIKit
+#endif
 
+#if canImport(UIKit)
 @MainActor public protocol UIApplicationProvider {
     func registerForRemoteNotifications()
     func unregisterForRemoteNotifications()
@@ -58,3 +61,4 @@ extension UIApplication: UIApplicationProvider {
 
     var shortcutItems: [UIApplicationShortcutItem]?
 }
+#endif

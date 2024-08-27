@@ -1,6 +1,7 @@
 import Foundation
 import SwiftUI
 
+#if canImport(UIKit)
 public extension View {
     func onInScreenEvent(onChange: @escaping (Bool) -> Void) -> some View {
         overlay(Color.clear.modifier(InScreenEventModifier(onChange: onChange)))
@@ -28,3 +29,4 @@ struct InScreenEventModifier: ViewModifier {
         }
     }
 }
+#endif

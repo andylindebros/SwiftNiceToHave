@@ -1,7 +1,11 @@
 import CoreGraphics
 import CoreText
 import SwiftUI
-import UIKit
+#if os(iOS)
+    import UIKit
+#elseif os(macOS)
+    import AppKit
+#endif
 
 public extension View {
     func font(_ font: Font, color: Color) -> some View {
