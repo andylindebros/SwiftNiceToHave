@@ -35,4 +35,8 @@ public extension Array {
     static func build(@ArrayBuilder<Element> _ items: () -> [Element]) -> [Element] {
         Array(items())
     }
+
+    init(@ArrayBuilder<Element> builder: () -> [Element]) {
+        self.init(builder())
+    }
 }

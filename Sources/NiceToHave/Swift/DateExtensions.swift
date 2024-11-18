@@ -17,14 +17,6 @@ public extension Date {
         Date.now.addingTimeInterval(3600 * afterHours).excludeTime
     }
 
-    func hours(to date: Date) -> Int? {
-        Calendar(identifier: .gregorian).dateComponents(
-            [.hour],
-            from: self,
-            to: date
-        ).hour
-    }
-
     func days(to date: Date) -> Int? {
         Calendar(identifier: .gregorian).dateComponents(
             [.day],
@@ -33,12 +25,28 @@ public extension Date {
         ).day
     }
 
+    func hours(to date: Date) -> Int? {
+        Calendar(identifier: .gregorian).dateComponents(
+            [.hour],
+            from: self,
+            to: date
+        ).hour
+    }
+
     func minutes(to date: Date) -> Int? {
         Calendar(identifier: .gregorian).dateComponents(
             [.minute],
             from: self,
             to: date
         ).minute
+    }
+
+    func seconds(to date: Date) -> Int? {
+        Calendar(identifier: .gregorian).dateComponents(
+            [.second],
+            from: self,
+            to: date
+        ).second
     }
 
     /**

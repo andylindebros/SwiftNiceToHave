@@ -8,4 +8,17 @@ final class NiceToHaveTests: XCTestCase {
         // results.
         XCTAssertEqual(NiceToHave().text, "Hello, World!")
     }
+
+    func testArrayBuilder() async throws {
+        enum Test: Equatable{
+            case a, b, c
+        }
+
+        let arr = Array {
+            Test.a
+            Test.b
+            Test.c
+        }
+        XCTAssertEqual(arr, [Test.a, Test.b, Test.c])
+    }
 }
