@@ -36,7 +36,7 @@ public extension Array {
         Array(items())
     }
 
-    init(@ArrayBuilder<Element> builder: () -> [Element]) {
+    init(@ArrayBuilder<Element> _ builder: () -> [Element]) {
         self.init(builder())
     }
 }
