@@ -27,7 +27,7 @@ private struct BlinkViewModifier: ViewModifier {
 
 @available(macOS 13.0, *)
 @available(iOS 17.0, *)
-extension View {
+public extension View {
     func blinkEffect(duration: Double = 1, speed: ContinuousClock.Instant.Duration = .seconds(1)) -> some View {
         modifier(BlinkViewModifier(duration: duration, speed: speed))
     }
