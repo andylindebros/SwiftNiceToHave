@@ -9,7 +9,7 @@ public protocol UserDefaultsProvider {
     func value(forKey key: String) -> Any?
 }
 
-extension UserDefaults: UserDefaultsProvider {
+extension UserDefaults: UserDefaultsProvider, @unchecked @retroactive Sendable {
     public func setObject<O: Encodable>(_ value: O, forKey defaultName: String) throws {
         let data = try JSONEncoder().encode(value)
         set(String(data: data, encoding: .utf8), forKey: defaultName)
