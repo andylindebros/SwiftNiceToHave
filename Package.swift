@@ -10,20 +10,37 @@ let package = Package(
         // Products define the executables and libraries a package produces, and make them visible to other packages.
         .library(
             name: "NiceToHave",
-            targets: ["NiceToHave"]),
+            targets: ["NiceToHave"]
+        ),
+
+        .plugin(name: "DesignSystemPlugin", targets: ["DesignSystemPlugin"]),
+
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         // .package(url: /* package url */, from: "1.0.0"),
     ],
     targets: [
-        // Targets are the basic building blocks of a package. A target can define a module or a test suite.
-        // Targets can depend on other targets in this package, and on products in packages this package depends on.
+        .plugin(
+            name: "DesignSystemPlugin",
+            capability: .command(
+                intent: .custom(
+                    verb: "generate-code",
+                    description: "Generates Swift source code from a JSON schema file."
+                ),
+                permissions: [
+                    .writeToPackageDirectory(reason: "Needed to write generated Swift files."),
+                ]
+            ),
+            path: "Plugins/DesignSystemPlugin"
+        ),
         .target(
             name: "NiceToHave",
-            dependencies: []),
+            dependencies: []
+        ),
         .testTarget(
             name: "NiceToHaveTests",
-            dependencies: ["NiceToHave"]),
+            dependencies: ["NiceToHave"]
+        ),
     ]
 )
