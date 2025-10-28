@@ -26,6 +26,18 @@ enum DestinationType: String {
     case module
 }
 
+enum FontStrategy: String {
+    init?(rawValue: String?) {
+        switch rawValue {
+        case "default": self = .hardCodedValues
+        case "nestedValues": self = .nestedValues
+        default: return nil
+        }
+    }
+    case hardCodedValues
+    case nestedValues
+}
+
 struct OpacityTheme: Decodable {
     let light: OpacityModel
     let dark: OpacityModel

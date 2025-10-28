@@ -77,26 +77,26 @@ enum FontGenerator {
                         """
 
                 }.joined(separator: "\n"))
-                                    public var textStyling: TextStyling {
-                                        switch self {
-                                                    \(try sizeContent.sorted(by: { $0.0 < $1.0 }).map { fontName, fontcontainer in
-                                                            """
-                                                                        /// Type: \(name.upperCamelCased), Size: \(try config.nestedValue(by: fontcontainer.value.fontSize).strippedFromUnits), Weight: \(fontName.upperCamelCased)
-                                                                        case .\(fontName.camelCased): return TextStyling(
-                                                                            fontFamily: "\(try config.nestedValue(by: fontcontainer.value.fontFamily).upperCamelCased)",
-                                                                            fontSize: \(try config.nestedValue(by: fontcontainer.value.fontSize).strippedFromUnits),
-                                                                            fontWeight: "\(try config.nestedValue(by: fontcontainer.value.fontWeight))",
-                                                                            letterSpacing: \(try config.nestedValue(by: fontcontainer.value.letterSpacing).strippedFromUnits),
-                                                                            lineHeight: \(try config.nestedValue(by: fontcontainer.value.lineHeight).strippedFromUnits),
-                                                                            paragraphIndent: \(try config.nestedValue(by: fontcontainer.value.paragraphIndent).strippedFromUnits),
-                                                                            paragraphSpacing: \(try config.nestedValue(by: fontcontainer.value.paragraphSpacing).strippedFromUnits),
-                                                                            textCase: "\(try config.nestedValue(by: fontcontainer.value.textCase))",
-                                                                            textDecoration: TextStyling.TextDecoration(rawValue: "\(try config.nestedValue(by: fontcontainer.value.textDecoration))") ?? .none
-                                                                        )
+                            public var textStyling: TextStyling {
+                                switch self {
+                                            \(try sizeContent.sorted(by: { $0.0 < $1.0 }).map { fontName, fontcontainer in
+                                                        """
+                                                            /// Type: \(name.upperCamelCased), Size: \(fontcontainer.value.fontSize.strippedFromUnits), Weight: \(fontName.upperCamelCased)
+                                                                            case .\(fontName.camelCased): return TextStyling(
+                                                                                    fontFamily: "\(fontcontainer.value.fontFamily)",
+                                                                                    fontSize: \(fontcontainer.value.fontSize.strippedFromUnits),
+                                                                                    fontWeight: "\(fontcontainer.value.fontWeight)",
+                                                                                    letterSpacing: \(fontcontainer.value.letterSpacing.strippedFromUnits),
+                                                                                    lineHeight: \(fontcontainer.value.lineHeight.strippedFromUnits),
+                                                                                    paragraphIndent: \(fontcontainer.value.paragraphIndent.strippedFromUnits),
+                                                                                    paragraphSpacing: \(fontcontainer.value.paragraphSpacing.strippedFromUnits),
+                                                                                    textCase: "\(fontcontainer.value.textCase)",
+                                                                                    textDecoration: TextStyling.TextDecoration(rawValue: "\(fontcontainer.value.textDecoration)") ?? .none
+                                                                                )
                                                             """
                                                         }.joined(separator: "\n"))
-                                        }
-                                    }
+                                }
+                            }
                 
                         }
                 """
@@ -106,7 +106,6 @@ enum FontGenerator {
         }.joined(separator: "\n"))
         }
         """
-
     }
 }
 
