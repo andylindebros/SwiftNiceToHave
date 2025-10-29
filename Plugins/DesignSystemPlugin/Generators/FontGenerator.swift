@@ -34,7 +34,7 @@ enum FontGenerator {
         public struct TextStyling: Sendable {
             public let fontFamily: String
             public let fontSize: CGFloat
-            public let fontWeight: String
+            public let fontWeight: String?
             public let letterSpacing: CGFloat
             public let lineHeight: CGFloat
             public let paragraphIndent: CGFloat
@@ -43,11 +43,13 @@ enum FontGenerator {
             public let textDecoration: TextDecoration
         
             public var font: Font {
-                Font.custom("\\(fontFamily)-\\(fontWeight)", size: CGFloat(fontSize))
+                Font.custom([fontFamily, fontWeight].compactMap { $0 }
+                .joined(separator: "-"), size: CGFloat(fontSize))
             }
             #if canImport(UIKit)
             public var uiFont: UIFont {
-                UIFont(name: "\\(fontFamily)-\\(fontWeight)", size: CGFloat(fontSize))!
+                UIFont(name: [fontFamily, fontWeight].compactMap { $0 }
+                .joined(separator: "-"), size: CGFloat(fontSize))!
             }
             #endif
         }
@@ -85,7 +87,7 @@ enum FontGenerator {
                                                                             case .\(fontName.camelCased): return TextStyling(
                                                                                     fontFamily: "\(fontcontainer.value.fontFamily)",
                                                                                     fontSize: \(fontcontainer.value.fontSize.strippedFromUnits),
-                                                                                    fontWeight: "\(fontcontainer.value.fontWeight)",
+                                                                                    fontWeight: \(fontcontainer.value.fontWeightString),
                                                                                     letterSpacing: \(fontcontainer.value.letterSpacing.strippedFromUnits),
                                                                                     lineHeight: \(fontcontainer.value.lineHeight.strippedFromUnits),
                                                                                     paragraphIndent: \(fontcontainer.value.paragraphIndent.strippedFromUnits),
@@ -116,7 +118,7 @@ extension FontGenerator {
 
     struct FontModel: Decodable {
         let fontFamily: String
-        let fontWeight: String
+        let fontWeight: String?
         let lineHeight: String
         let fontSize: String
         let letterSpacing: String
@@ -124,6 +126,13 @@ extension FontGenerator {
         let paragraphIndent: String
         let textCase: String
         let textDecoration: String
+
+        var fontWeightString: String {
+            if let fontWeight {
+                return "\"\(fontWeight)\""
+            }
+            return "nil"
+        }
     }
 }
 
