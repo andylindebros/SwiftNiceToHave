@@ -36,7 +36,7 @@ struct ContentView: View {
 @MainActor
 @Observable final class ViewModel {
     init() {
-        throttler = Throttler<String>(interval: 1)
+        throttler = Throttler<String>(interval: .milliseconds(250))
         debouncer = Debounce<String>(timeout: .milliseconds(250)) { [weak self] value in
             await self?.debouncedValue(value: value)
         }

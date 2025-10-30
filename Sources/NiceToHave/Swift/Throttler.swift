@@ -9,15 +9,15 @@ public final actor Throttler<Element: Sendable>: AsyncSequence {
     public typealias Element = Element
 
     // Immutable properties that can safely be read outside actor isolation
-    nonisolated(unsafe) private let interval: TimeInterval
-    nonisolated(unsafe) private let stream: AsyncStream<Element>
+    private let interval: Duration
+    private let stream: AsyncStream<Element>
 
     private let continuation: AsyncStream<Element>.Continuation
     private var queueSize = 0
     private let maxSize: Int
     private let logger = Logger(prefix: "Throttler")
 
-    public init(interval: TimeInterval, maxSize: Int = 100) {
+    public init(interval: Duration, maxSize: Int = 100) {
         self.interval = interval
         self.maxSize = maxSize
 
@@ -58,12 +58,12 @@ public final actor Throttler<Element: Sendable>: AsyncSequence {
         public typealias Element = Throttler.Element
 
         private var streamIterator: AsyncStream<Element>.AsyncIterator
-        private let interval: TimeInterval
+        private let interval: Duration
         private let onComplete: @Sendable () async -> Void
 
         public init(
             stream: AsyncStream<Element>,
-            interval: TimeInterval,
+            interval: Duration,
             onComplete: @escaping @Sendable () async -> Void
         ) {
             self.streamIterator = stream.makeAsyncIterator()
@@ -73,7 +73,7 @@ public final actor Throttler<Element: Sendable>: AsyncSequence {
 
         public mutating func next() async -> Element? {
             guard let element = await streamIterator.next() else { return nil }
-            try? await Task.sleep(nanoseconds: UInt64(interval * 1_000_000_000))
+            try? await Task.sleep(for: interval)
             await onComplete()
             return element
         }
