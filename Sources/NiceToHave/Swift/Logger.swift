@@ -4,7 +4,7 @@ import OSLog
 
 /// A logger utility that provides easy-to-use methods for logging messages at different log levels,
 /// including debug, info, warning, and error, with automatic file and line information.
-public struct Logger {
+public struct Logger: Sendable {
     private let logger: os.Logger
     private let prefix: String
 
