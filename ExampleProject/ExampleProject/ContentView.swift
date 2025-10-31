@@ -45,17 +45,17 @@ struct ContentView: View {
             await self?.streamThrottler()
         }
     }
-
+    private static let logger = Logger(prefix: "")
     private var debouncer: Debounce<String>?
     private let throttler: Throttler<String>
 
     func streamThrottler() async {
         for await name in throttler {
-            print("🔥 Hello", "\(name)!")
+            Self.logger.debug("🔥 Hello", "\(name)!")
         }
     }
     func debouncedValue(value: String) async {
-        print("🚀 Hello", "\(value)!")
+        Self.logger.debug("🚀 Hello", "\(value)!")
     }
 
     func onChange(of text: String) async {
