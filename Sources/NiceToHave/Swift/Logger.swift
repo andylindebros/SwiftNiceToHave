@@ -4,7 +4,7 @@ public struct Logger {
     private let logger: os.Logger
     private let prefix: String
 
-    public init(prefix: String, subsystem: String = #file, category _: String = #file) {
+    public init(prefix: String = "", subsystem: String = #file) {
         logger = os.Logger(subsystem: subsystem, category: prefix)
         self.prefix = prefix
     }
