@@ -1,5 +1,3 @@
-
-
 import Foundation
 import os
 
@@ -17,6 +15,10 @@ public final actor Throttler<Element: Sendable>: AsyncSequence {
     private let maxSize: Int
     private let logger = Logger(prefix: "Throttler")
 
+    /// Creates a new Throttler that emits elements at the specified interval.
+    /// - Parameters:
+    ///   - interval: The duration to wait between emitting elements.
+    ///   - maxSize: The maximum number of elements allowed in the queue.
     public init(interval: Duration, maxSize: Int = 100) {
         self.interval = interval
         self.maxSize = maxSize
@@ -28,7 +30,7 @@ public final actor Throttler<Element: Sendable>: AsyncSequence {
         self.continuation = cont
     }
 
-    /// Nonisolated conformance to AsyncSequence
+    /// Returns an async iterator that emits elements at the configured interval.
     public nonisolated func makeAsyncIterator() -> Iterator {
         Iterator(
             stream: stream,
@@ -39,19 +41,22 @@ public final actor Throttler<Element: Sendable>: AsyncSequence {
         )
     }
 
-    public func add(_ element: Element) {
+    ///  Will add an element in queue
+    /// - Returns: true om elementet lades till, annars false (om kön var full).
+    @discardableResult
+    public func add(_ element: Element) -> Bool {
         guard queueSize < maxSize else {
             logger.debug("🍀 Max capacity reached, cannot add more elements.")
-            return
+            return false
         }
         queueSize += 1
         continuation.yield(element)
+        return true
     }
 
+    /// decreases the queue when an element has been processed.
     private func decrementQueue() {
-        if queueSize > 0 {
-            queueSize -= 1
-        }
+        queueSize = Swift.max(queueSize - 1, 0)
     }
 
     public struct Iterator: AsyncIteratorProtocol {
