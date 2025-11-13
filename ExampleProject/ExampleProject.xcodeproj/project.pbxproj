@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1E0D7CAA2EAB6811008BE532 /* NiceToHave in Frameworks */ = {isa = PBXBuildFile; productRef = 1E0D7CA92EAB6811008BE532 /* NiceToHave */; };
+		DCB66E062EC608E900FB91B5 /* NiceToHave in Frameworks */ = {isa = PBXBuildFile; productRef = DCB66E052EC608E900FB91B5 /* NiceToHave */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +57,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DCB66E062EC608E900FB91B5 /* NiceToHave in Frameworks */,
 				1E0D7CAA2EAB6811008BE532 /* NiceToHave in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -118,6 +120,7 @@
 			name = ExampleProject;
 			packageProductDependencies = (
 				1E0D7CA92EAB6811008BE532 /* NiceToHave */,
+				DCB66E052EC608E900FB91B5 /* NiceToHave */,
 			);
 			productName = ExampleProject;
 			productReference = 1E0D7C722EAB67E1008BE532 /* ExampleProject.app */;
@@ -202,7 +205,7 @@
 			mainGroup = 1E0D7C692EAB67E1008BE532;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				1E0D7CA82EAB6811008BE532 /* XCLocalSwiftPackageReference "../../NiceToHave" */,
+				DCB66E042EC608E900FB91B5 /* XCLocalSwiftPackageReference "../../SwiftNiceToHave" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 1E0D7C732EAB67E1008BE532 /* Products */;
@@ -618,14 +621,18 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		1E0D7CA82EAB6811008BE532 /* XCLocalSwiftPackageReference "../../NiceToHave" */ = {
+		DCB66E042EC608E900FB91B5 /* XCLocalSwiftPackageReference "../../SwiftNiceToHave" */ = {
 			isa = XCLocalSwiftPackageReference;
-			relativePath = ../../NiceToHave;
+			relativePath = ../../SwiftNiceToHave;
 		};
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
 		1E0D7CA92EAB6811008BE532 /* NiceToHave */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = NiceToHave;
+		};
+		DCB66E052EC608E900FB91B5 /* NiceToHave */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = NiceToHave;
 		};
