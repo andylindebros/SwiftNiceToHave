@@ -25,6 +25,7 @@ public actor Debounce<T: Sendable> {
         task = Task {[timeout, block] in
             do {
                 try await Task.sleep(for: timeout)
+                guard !Task.isCancelled else { return }
                 lastValue = nil
                 await block(value)
             } catch {}
