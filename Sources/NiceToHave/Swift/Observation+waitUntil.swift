@@ -2,6 +2,7 @@ import Foundation
 import Observation
 
 @available(iOS 17.0, *)
+@available(macOS 14.0, *)
 @MainActor
 public extension Observable where Self: AnyObject {
     @discardableResult
