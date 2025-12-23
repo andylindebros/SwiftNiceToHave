@@ -3,6 +3,7 @@
     import UIKit
 
     public struct LifecycleTask: Sendable, Hashable {
+        let id: UUID = .init()
         let task: Task<Void, Error>
 
         public init(
@@ -13,17 +14,16 @@
             let lifeCycleStreamer = LifeCycleStreamer()
             task = Task {
                 for await isInForeground in lifeCycleStreamer.appLifecycleStream() {
-                    if isInForeground {
-                        activeTask?.cancel()
+                    activeTask?.cancel()
+                    activeTask = nil
+                    if isInForeground, !Task.isCancelled {
                         activeTask = Task(priority: priority) {
                             await operation()
                         }
-                    } else {
-                        activeTask?.cancel()
-                        activeTask = nil
                     }
                 }
                 if Task.isCancelled {
+                    activeTask?.cancel()
                     return
                 }
                 fatalError("Stream ended unexpectedly")
@@ -74,6 +74,14 @@
                     }
                 }
             }
+        }
+
+        public static func == (lhs: LifecycleTask, rhs: LifecycleTask) -> Bool {
+            lhs.id == rhs.id
+        }
+
+        public func hash(into hasher: inout Hasher) {
+            hasher.combine(id)
         }
     }
 #endif
