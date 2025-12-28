@@ -1,5 +1,6 @@
 import SwiftUI
 
+#if os(iOS)
 private struct LifecycleTaskModifier: ViewModifier {
     @State private var appInForeground: Bool = true
     let action: @MainActor () async -> Void
@@ -24,3 +25,5 @@ public extension View {
         modifier(LifecycleTaskModifier(action: action))
     }
 }
+
+#endif
