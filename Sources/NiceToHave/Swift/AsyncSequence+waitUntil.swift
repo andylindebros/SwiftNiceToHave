@@ -6,27 +6,27 @@ public extension AsyncSequence where Element: Sendable, Self: Sendable {
         timeout: Duration = .seconds(20),
         file: StaticString = #file,
         line: UInt = #line,
-        where predicate: @escaping @Sendable (Element) -> Bool
+        where predicate: @escaping @Sendable (Element) throws -> Bool
     ) async throws -> Element {
         try await withThrowingTaskGroup(of: Element.self) { continuation in
             continuation.addTask {
                 for try await element in self {
-                    if predicate(element) {
+                    if try predicate(element) {
                         return element
                     }
                 }
                 // Throw endOfStream if the stream for some reason ends.
-                throw WaitError.endOfStream(file, line)
+                throw AsyncSequenceWaitError.endOfStream(file, line)
             }
 
             continuation.addTask {
                 try await Task.sleep(for: timeout)
-                throw WaitError.timeout(file, line)
+                throw AsyncSequenceWaitError.timeout(file, line)
             }
 
             // Return the first task that is completed
             guard let result = try await continuation.next() else {
-                throw WaitError.endOfStream(file, line)
+                throw AsyncSequenceWaitError.endOfStream(file, line)
             }
             continuation.cancelAll() // Cancel the second task
             return result
@@ -34,12 +34,15 @@ public extension AsyncSequence where Element: Sendable, Self: Sendable {
     }
 }
 
-public enum WaitError: Error, CustomDebugStringConvertible {
+public enum AsyncSequenceWaitError: Error, CustomDebugStringConvertible {
     case timeout(StaticString, UInt)
     case endOfStream(StaticString, UInt)
+    case unexexpectedError(Error, StaticString = #file, UInt = #line)
 
     public var debugDescription: String {
         switch self {
+        case let .unexexpectedError(error, file, line):
+            return "Unexpected error \(error) thrown while waiting at \(file):\(line)"
         case let .timeout(file, line):
             return "Timeout error executed from \(file):\(line)"
         case let .endOfStream(file, line):

@@ -1,38 +1,42 @@
 import Foundation
 
 @resultBuilder
-public enum ArrayBuilder<Element> {
-    public static func buildEither(first component: [Element]) -> [Element] {
+package enum ArrayBuilder<Element> {
+    package static func buildEither(first component: [Element]) -> [Element] {
         return component
     }
 
-    public static func buildEither(second component: [Element]) -> [Element] {
+    package static func buildEither(second component: [Element]) -> [Element] {
         return component
     }
 
-    public static func buildOptional(_ component: [Element]?) -> [Element] {
+    package static func buildOptional(_ component: [Element]?) -> [Element] {
         return component ?? []
     }
 
-    public static func buildExpression(_ expression: Element) -> [Element] {
+    package static func buildExpression(_ expression: Element) -> [Element] {
         return [expression]
     }
 
-    public static func buildExpression(_: ()) -> [Element] {
+    package static func buildExpression(_: ()) -> [Element] {
         return []
     }
 
-    public static func buildBlock(_ components: [Element]...) -> [Element] {
+    package static func buildBlock(_ components: [Element]...) -> [Element] {
         return components.flatMap { $0 }
     }
 
-    public static func buildArray(_ components: [[Element]]) -> [Element] {
+    package static func buildArray(_ components: [[Element]]) -> [Element] {
         Array(components.joined())
     }
 }
 
-public extension Array {
-    init(@ArrayBuilder<Element> _ items: () -> [Element]) {
-        self.init(items())
+package extension Array {
+    init(@ArrayBuilder<Element> _ items: () throws -> [Element]) rethrows {
+        self = try items()
+    }
+
+    init(@ArrayBuilder<Element> _ items: () async throws -> [Element]) async rethrows {
+        self = try await items()
     }
 }
