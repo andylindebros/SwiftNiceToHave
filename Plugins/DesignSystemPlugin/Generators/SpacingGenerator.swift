@@ -16,7 +16,9 @@ enum SpacingGenerator {
     static func createExtension(for models: [String: SpacingModel]) throws -> String {
         """
         /// Note! This is a generated file. Any changes within this file will be overwritten.
+        #if canImport(UIKit)
         import UIKit
+        #endif
         import SwiftUI
 
         public extension Double.ds {

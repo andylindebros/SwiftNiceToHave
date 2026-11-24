@@ -13,7 +13,7 @@ public final actor Throttler<Element: Sendable>: AsyncSequence {
     private let continuation: AsyncStream<Element>.Continuation
     private var queueSize = 0
     private let maxSize: Int
-    private let logger = Logger(prefix: "Throttler")
+    private let logger = NiceToHave.LoggerImpl(prefix: "Throttler")
 
     /// Creates a new Throttler that emits elements at the specified interval.
     /// - Parameters:

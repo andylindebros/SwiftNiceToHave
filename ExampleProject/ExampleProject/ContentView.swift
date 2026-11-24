@@ -45,7 +45,7 @@ struct ContentView: View {
             await self?.streamThrottler()
         }
     }
-    private static let logger = Logger(prefix: "")
+    private static let logger = NiceToHave.LoggerImpl(prefix: "")
     private var debouncer: Debounce<String>?
     private let throttler: Throttler<String>
 
